@@ -13,10 +13,7 @@ export const postRouter = createTRPCRouter({
 
   create: publicProcedure
     .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      // simulate a slow db call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
+    .mutation(({ ctx, input }) => {
       return ctx.db.post.create({
         data: {
           name: input.name,
@@ -24,9 +21,42 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-  getLatest: publicProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
+  createComment: publicProcedure
+    .input(z.object({ name: z.string().min(1), postId: z.number() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.db.comment.create({
+        data: {
+          postId: input.postId,
+          name: input.name,
+        },
+      });
+    }),
+  getTweet: publicProcedure.query(({ ctx }) => {
+    return ctx.db.post.findMany({
       orderBy: { createdAt: "desc" },
+      include: {
+        comments: {
+          include: { replies: true },
+        },
+      },
     });
   }),
+
+  createReply: publicProcedure
+    .input(
+      z.object({
+        name: z.string().min(1),
+        parentId: z.number().optional(),
+        postId: z.number(),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.db.comment.create({
+        data: {
+          name: input.name,
+          parentId: input.parentId, //  parentId is the ID of the comment we are  replying to 👍, it should be null if we are not replying to a comment.
+          postId: input.postId, //post id is the id of the post we are replying to 👍
+        },
+      });
+    }),
 });
