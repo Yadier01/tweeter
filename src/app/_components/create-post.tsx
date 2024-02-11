@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BiWorld } from "react-icons/bi";
 import { api } from "~/trpc/react";
-
+import { userStore } from "../Store/userStore";
 export function CreatePost() {
   const router = useRouter();
   const [postContent, setPostContent] = useState("");
-
+  const username = userStore((state) => state.username);
   const createPostMutation = api.post.create.useMutation({
     onSuccess: () => {
       router.refresh();
@@ -17,7 +17,7 @@ export function CreatePost() {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createPostMutation.mutate({ name: postContent });
+    createPostMutation.mutate({ content: postContent, name: username });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
