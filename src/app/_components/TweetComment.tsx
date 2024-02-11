@@ -2,21 +2,22 @@
 import { useState } from "react";
 import { CommentStructure } from "./CommentStructure";
 
-interface Reply {
-  id: number;
-  name: string;
-  postId: number;
-  parentId: number | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// interface Reply {
+//   id: number;
+//   name: string;
+//   postId: number;
+//   parentId: number | null;
+//   createdAt: Date;
+//   updatedAt: Date;
+// }
 
-interface Comment extends Reply {
-  replies?: Reply[];
-}
+// interface Comment extends Reply {
+//   replies?: Reply[];
+//   userName: string;
+// }
 
 type Props = {
-  comment: Comment[];
+  comment: any[];
   parentPostId: number;
 };
 export const TweetComment = ({ comment, parentPostId }: Props) => {
