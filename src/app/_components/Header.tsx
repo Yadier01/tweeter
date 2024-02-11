@@ -10,9 +10,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
+import { userStore } from "../Store/userStore";
 export const Header = () => {
   const [active, setActive] = useState(0);
   const [activePopover, setActivePopover] = useState(true);
+  const username = userStore((state) => state.username);
   const links = ["Home", "Explore", "Bookmarks"];
 
   return (
@@ -38,8 +40,7 @@ export const Header = () => {
         <PopoverTrigger>
           <div className="flex items-center gap-3">
             <img src="/pfp.jpg" alt="" className="h-10  rounded-full " />
-
-            <p>Xanthe Neal</p>
+            {username === "" ? "Login" : username}
           </div>
         </PopoverTrigger>
         <PopoverContent>
