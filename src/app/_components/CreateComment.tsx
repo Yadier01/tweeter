@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { api } from "~/trpc/react";
+import { userStore } from "../Store/userStore";
 
 export function CreateComment({ postId }: any) {
   const router = useRouter();
   const [content, setName] = useState("");
-
+  const username = userStore((state) => state.username);
   const createPost = api.post.createComment.useMutation({
     onSuccess: () => {
       router.refresh();
@@ -20,7 +21,7 @@ export function CreateComment({ postId }: any) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createPost.mutate({ content, userName: "yadi", postId });
+        createPost.mutate({ content, userName: username, postId });
       }}
       className="flex w-full flex-col gap-2"
     >
