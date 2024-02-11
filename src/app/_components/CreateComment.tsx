@@ -7,7 +7,7 @@ import { api } from "~/trpc/react";
 
 export function CreateComment({ postId }: any) {
   const router = useRouter();
-  const [name, setName] = useState("");
+  const [content, setName] = useState("");
 
   const createPost = api.post.createComment.useMutation({
     onSuccess: () => {
@@ -20,13 +20,13 @@ export function CreateComment({ postId }: any) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createPost.mutate({ name, postId });
+        createPost.mutate({ content, userName: "yadi", postId });
       }}
       className="flex w-full flex-col gap-2"
     >
       <input
         onChange={(e) => setName(e.target.value)}
-        value={name}
+        value={content}
         name="tweet"
         id="tweet"
         placeholder="Tweet your reply"

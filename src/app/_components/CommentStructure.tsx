@@ -8,16 +8,16 @@ export const CommentStructure = ({
   parentPost,
 }: any) => {
   return (
-    <div key={com.id} className="flex flex-col">
+    <div key={com.id} className="flex w-full flex-col">
       <div className="mt-7 flex gap-3">
         <img src="/pfp.jpg" className="h-10 rounded-lg" alt="" />
-        <div>
+        <div className="w-full">
           <div className="bg-[#FAFAFA] p-4 text-[#4F4F4F]">
             <div className=" flex items-center gap-4">
-              <h3 className="font-semibold">User Name</h3>
+              <h3 className="font-semibold">{com.userName}</h3>
               <p className=" text-xs text-[#BDBDBD]">24 agust at 20:43</p>
             </div>
-            <p>{com.name}</p>
+            <p>{com.content}</p>
           </div>
 
           <span className=" flex gap-4">
