@@ -12,7 +12,7 @@ export function CreateReply({
   parentId: any;
 }) {
   const router = useRouter();
-  const [name, setName] = useState("");
+  const [content, setName] = useState("");
 
   const createPost = api.post.createReply.useMutation({
     onSuccess: () => {
@@ -20,18 +20,17 @@ export function CreateReply({
       setName("");
     },
   });
-  console.log(postId, parentId);
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        createPost.mutate({ name, postId, parentId });
+        createPost.mutate({ content, postId, parentId, userName: "string" });
       }}
       className="flex w-full flex-col gap-2"
     >
       <input
         onChange={(e) => setName(e.target.value)}
-        value={name}
+        value={content}
         name="tweet"
         id="tweet"
         placeholder="Tweet your reply"
