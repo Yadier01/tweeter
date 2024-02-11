@@ -23,11 +23,11 @@ export const Tweet = async () => {
           <div className="mb-4 flex">
             <img src="pfp.jpg" className="h-10 rounded-md" alt="" />
             <div className="ml-4">
-              <h4 className=" font-semibold">User Name</h4>
+              <h4 className=" font-semibold">{post.name}</h4>
               <p className="text-xs">24 agust at 20:43</p>
             </div>
           </div>
-          <p>{post.name}</p>
+          <p>{post.content}</p>
           <img
             src="/testimg.png"
             alt=""
