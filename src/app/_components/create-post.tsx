@@ -7,6 +7,7 @@ import { userStore } from "../Store/userStore";
 export function CreatePost() {
   const router = useRouter();
   const [postContent, setPostContent] = useState("");
+  const [maxTextLength, setMaxTextLength] = useState<number>(200);
   const username = userStore((state) => state.username);
   const createPostMutation = api.post.create.useMutation({
     onSuccess: () => {
@@ -21,7 +22,13 @@ export function CreatePost() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setPostContent(e.target.value);
+    const maxTextLength = 200;
+    const inputLength = e.target.value.length;
+
+    if (inputLength <= maxTextLength) {
+      setMaxTextLength(maxTextLength - inputLength);
+      setPostContent(e.target.value);
+    }
   };
   return (
     <form onSubmit={handleFormSubmit} className="flex w-full flex-col gap-2">
@@ -41,7 +48,7 @@ export function CreatePost() {
               <BiWorld /> Everyone can reply
             </li>
           </ul>
-
+          <p>{maxTextLength}</p>
           <button
             className="h-[32px] w-[81px] rounded-[4px] bg-[#2F80ED] text-sm text-white"
             disabled={createPostMutation.isLoading}
